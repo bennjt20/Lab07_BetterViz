@@ -9,17 +9,90 @@ output: github_document
 
 ```{r load-packages, message=FALSE}
 library(tidyverse) 
+library(ggplot2)
 ```
 
 ### Exercise 1
 
-Remove this text, and add your answer for Exercise 1 here.
-Add code chunks as needed.
-Don't forget to label your code chunk.
-Do not use spaces in code chunk labels.
+```{r DataDisplay}
+KACovid <- tribble(
+  ~date, ~mask, ~No_mask,
+  "7/12/2020", 25, 10,
+  "7/13/2020", 20, 9,
+  "7/14/2020", 20, 9,
+  "7/15/2020", 21, 10,
+  "7/16/2020", 20, 10,
+  "7/17/2020", 20, 10,
+  "7/18/2020", 21, 10,
+  "7/19/2020", 20, 9,
+  "7/20/2020", 21, 9,
+  "7/21/2020", 20, 9,
+  "7/22/2020", 20, 9,
+  "7/23/2020", 20, 9,
+  "7/24/2020", 20, 10,
+  "7/25/2020", 19, 10,
+  "7/26/2020", 20, 10,
+  "7/27/2020", 17, 9,
+  "7/28/2020", 16, 9,
+  "7/29/2020", 16, 9,
+  "7/30/2020", 16, 9,
+  "7/31/2020", 16, 10,
+  "8/1/2020", 16, 9,
+  "8/2/2020", 16, 9,
+  "8/3/2020", 16, 9,
+)
+```
 
-### Exercise 2
+### Exercise 2 Make visualization
 
-...
+```{r Graph1 No data appears when using "geom_line"}
+ggplot(KACovid, aes(x=date)) + 
+  geom_line(aes(y = mask), color = "darkred") + 
+  geom_line(aes(y = No_mask), color = "steelblue")
+```  
+     
+```{r Graph2}
+ggplot(KACovid, aes(x=date)) + 
+  geom_point(aes(y = mask), color = "darkred") + 
+  geom_point(aes(y = No_mask), color="steelblue") +
+labs(                                
+   x = "Date",
+   y = "Mask or No Mask",
+   title = "Kansas Covid"
+ )
+``` 
 
-Add exercise headings as needed.
+NOTE: I tried to add a legend but could not get it
+  legend(x = "7/31/2020", y = "20", legend = levels(KACovid$mask), col = c(1:3), pch = 16)
+
+```{r Graph3 No data appears using geom line}
+  ggplot(data = KACovid, aes(x = date, y = mask))+
+  geom_line()
+``` 
+  
+```{r Graph5 No data appers using geom_line}
+ggplot(KACovid, aes(x=date)) + 
+  geom_line(aes(y=mask))
+``` 
+
+```{r Graph6 "geom_point" works for mask} 
+ggplot(KACovid, aes(x = date, y = mask)) +
+ geom_point()
+``` 
+
+ 
+### Exercise 3 
+Q: What message is more clear in your visualization than it was in the original visualization?
+The relative rate of infections in Mask versus No Mask counties is totally muddled by the original visualization. According to my new visualization, the No mask counties have always had a lower rate, in the time period at issue here.  
+
+The most clear message is that the original graph generates maximum confusion. In my visualization, I set the "Mask" counties on a 25 daily cases per 1K population metric. I did this because the label "Mask" is directly next to the number label "25." What this leaves me with is a graph showing that "mask" counties always had a higher number of cases per thousand in the population than "No mask" counties.    
+If this was not the conclusion that the designers of the original graph meant to convey, then they really should have considered how they are visualizing data. If this WAS what the original designers meant to convey, then they picked a terribly misleading way to display that relationship between two rates of infection.
+
+### Exercise 4 
+Q: What, if any, useful information do these data and your visualization tell us about mask wearing and COVID?
+A: The No mask counties have always had a lower rate, in this data set. That tells me that there is a factor aside from mask wearing that accounts for infection rates, in this time period in the state of KA. 
+
+A: Feel free to also comment on whether that lines up with what you know about mask wearing.
+If the Mask counties are densely populated counties, then there are going to higher infection rates because people are coming into contact with one another more frequently with more opportunities to spread the virus. If, on the other hand, the No Mask counties are sparsely populated, then the low infection rates would be expected because people are not interacting with congregated large numbers of people. This basically comports with what I know about mask wearing, which is that they help stop the spread of airborne viruses but if you are crammed in with large numbers of people that variable will take over. 
+
+
