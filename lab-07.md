@@ -1,7 +1,7 @@
 Lab 07 - Conveying the right message through visualisation
 ================
-Insert your name here
-Insert date here
+John Bennett
+March 7, 2022
 
 ### Load packages and data
 
