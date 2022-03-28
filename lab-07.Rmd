@@ -45,42 +45,23 @@ KACovid <- tribble(
 
 ### Exercise 2 Make visualization
 
-```{r Graph1 No data appears when using "geom_line"}
-ggplot(KACovid, aes(x=date)) + 
-  geom_line(aes(y = mask), color = "darkred") + 
-  geom_line(aes(y = No_mask), color = "steelblue")
-```  
-     
 ```{r Graph2}
+library(ggplot2)
+colors <- c("Mask [name of legend item]" = "blue", "No Mask [name of legend item]" = "red")
 ggplot(KACovid, aes(x=date)) + 
-  geom_point(aes(y = mask), color = "darkred") + 
-  geom_point(aes(y = No_mask), color="steelblue") +
+  geom_point(aes(y = mask, color = "Mask [name of legend item]"), size = 1.5) + 
+  geom_point(aes(y = No_mask, color="No Mask [name of legend item]"), size = 1.5) +
 labs(                                
    x = "Date",
    y = "Mask or No Mask",
-   title = "Kansas Covid"
- )
+   color = "Legend: Mask or No Mask"
+ ) +
+scale_color_manual(values = colors) +
+theme(text = element_text(size=7),
+        axis.text.x = element_text(angle=45, hjust=1))
 ``` 
 
-NOTE: I tried to add a legend but could not get it
-  legend(x = "7/31/2020", y = "20", legend = levels(KACovid$mask), col = c(1:3), pch = 16)
 
-```{r Graph3 No data appears using geom line}
-  ggplot(data = KACovid, aes(x = date, y = mask))+
-  geom_line()
-``` 
-  
-```{r Graph5 No data appers using geom_line}
-ggplot(KACovid, aes(x=date)) + 
-  geom_line(aes(y=mask))
-``` 
-
-```{r Graph6 "geom_point" works for mask} 
-ggplot(KACovid, aes(x = date, y = mask)) +
- geom_point()
-``` 
-
- 
 ### Exercise 3 
 Q: What message is more clear in your visualization than it was in the original visualization?
 The relative rate of infections in Mask versus No Mask counties is totally muddled by the original visualization. According to my new visualization, the No mask counties have always had a lower rate, in the time period at issue here.  
